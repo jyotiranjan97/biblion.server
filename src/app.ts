@@ -1,12 +1,15 @@
 import express from 'express';
-import { helloWorldRoute } from './routes';
+import { handleError } from './utils/error';
+import { bookRouter } from './routes/bookRoutes';
 
 const app: express.Application = express();
 
-app.get('/', helloWorldRoute);
+app.use(handleError);
+
+app.use('/api/v1', bookRouter);
 
 const port = process.env.PORT || 3000;
 
 app.listen(port, () => {
-  console.log(`Server listening on port ${port}`);
+  console.log(`Server listening on port http://localhost:${port}`);
 });
