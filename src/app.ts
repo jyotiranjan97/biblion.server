@@ -2,6 +2,8 @@ import express from 'express';
 import { MongoClient } from 'mongodb';
 import { handleError } from './utils/error';
 import { bookRouter } from './routes/bookRoutes';
+import swaggerUi from 'swagger-ui-express';
+import swaggerSpec from './swagger.json';
 
 const app: express.Application = express();
 
@@ -22,6 +24,8 @@ async function connectToMongo() {
 connectToMongo();
 
 app.use(handleError);
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use('/api/v1', bookRouter);
 

@@ -1,10 +1,24 @@
 import { Router } from 'express';
-import { getBooks } from '../controllers/bookController';
+import { BooksController } from '../controllers/bookController';
 
 const bookRouter = Router();
 
-bookRouter.get('/', (req, res) => {
-  getBooks(req, res);
+const booksController = new BooksController(); // Create an instance
+
+bookRouter.get('/books', (req, res) => {
+  booksController.getBooks(req, res);
+});
+
+bookRouter.get('/books/:id', (req, res) => {
+  booksController.getBookById(req, res);
+});
+
+bookRouter.post('/books', (req, res) => {
+  booksController.createBook(req, res);
+});
+
+bookRouter.put('/books/:id', (req, res) => {
+  booksController.updateBook(req, res);
 });
 
 export { bookRouter };
