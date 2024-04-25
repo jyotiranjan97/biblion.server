@@ -1,6 +1,6 @@
 import bodyParser from 'body-parser';
 import express from 'express';
-import { MongoClient } from 'mongodb';
+import mongoose from 'mongoose';
 import swaggerUi from 'swagger-ui-express';
 import { bookRouter } from './routes/bookRoutes';
 import swaggerSpec from './swagger.json';
@@ -9,16 +9,13 @@ import { handleError } from './utils/error';
 const app: express.Application = express();
 
 const uri = 'mongodb://localhost:27017/Biblion';
-const client = new MongoClient(uri);
 
 async function connectToMongo() {
   try {
-    await client.connect();
+    await mongoose.connect(uri);
     console.log('Connected to MongoDB');
   } catch (error) {
     console.error('Error connecting to MongoDB', error);
-  } finally {
-    await client.close();
   }
 }
 
